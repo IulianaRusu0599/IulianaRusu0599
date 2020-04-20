@@ -1,6 +1,7 @@
 package com.company.utils;
 
 import com.company.model.*;
+import com.company.service.AuditService;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ public class CSVUtils {
     private static final String DOUBLE_QUOTE = "\"";
 
     public static void removeLineFromFile(String idToRemove, File f) {
+        String actiune = "Remove employees from CSV file";
+        AuditService auditService = new AuditService();
+        auditService.addToAudit(actiune);
         try {
             //Reading File Content and storing it to a StringBuilder variable ( skips lineToRemove)
             StringBuilder newFileContent = new StringBuilder();
@@ -55,7 +59,7 @@ public class CSVUtils {
         BufferedReader br = null;
         String line = "";
 
-        try{
+        try {
             br = new BufferedReader(new FileReader(filePath));
             while ((line = br.readLine()) != null) {
 
@@ -81,10 +85,9 @@ public class CSVUtils {
 //                            return new NetworkAdmin(Integer.parseInt(emp[0]), emp[1], emp[2], null);
 //                        if (emp[3].equals("DataBaseAdmin"))
 //                            return new DataBaseAdmin(Integer.parseInt(emp[0]), emp[1], emp[2], null);
-                    return new Manager(Integer.parseInt(emp[0]), emp[1], emp[2]);}
-                    }
-
-
+                    return new Manager(Integer.parseInt(emp[0]), emp[1], emp[2]);
+                }
+            }
 
 
         } catch (FileNotFoundException e) {
@@ -97,6 +100,9 @@ public class CSVUtils {
 
     //returnez toti angajatii din fisier
     public static List<Employee> readEmployeesFromCsv(String filePath) {
+        String actiune = "Get_Employees_From_CSV_File";
+        AuditService auditService = new AuditService();
+        auditService.addToAudit(actiune);
         List<Employee> employees = new ArrayList<>();
         BufferedReader br = null;
         String line = "";
@@ -114,33 +120,36 @@ public class CSVUtils {
 
                 Integer id = Integer.parseInt(employee[0]);
                 Integer manager = Integer.parseInt(employee[4]);
-                if(employee[3].equals("Manager"))
-                {
+                if (employee[3].equals("Manager")) {
                     Employee employeeFromCsv = new Manager(id, employee[1], employee[2]);
                     employees.add(employeeFromCsv);
                 }
-                if(employee[3].equals("Developer")){
+                if (employee[3].equals("Developer")) {
                     //caut managerul
-                    Employee manager1 =  readManager(filePath, manager);
-                    Employee employeeFromCsv = new Developer(id, employee[1], employee[2], (Manager)manager1);
+                    Employee manager1 = readManager(filePath, manager);
+                    Employee employeeFromCsv = new Developer(id, employee[1], employee[2], (Manager) manager1);
                     employees.add(employeeFromCsv);
                 }
-                if(employee[3].equals("DataBaseAdmin")){
-                    Employee manager1 =  readManager(filePath, manager);
-                    Employee employeeFromCsv = new DataBaseAdmin(id, employee[1], employee[2], (Manager)manager1);
+                if (employee[3].equals("DataBaseAdmin")) {
+                    Employee manager1 = readManager(filePath, manager);
+                    Employee employeeFromCsv = new DataBaseAdmin(id, employee[1], employee[2], (Manager) manager1);
                     employees.add(employeeFromCsv);
-                }if(employee[3].equals("NetworkAdmin")){
-                    Employee manager1 =  readManager(filePath, manager);
-                    Employee employeeFromCsv = new NetworkAdmin(id, employee[1], employee[2], (Manager)manager1);
+                }
+                if (employee[3].equals("NetworkAdmin")) {
+                    Employee manager1 = readManager(filePath, manager);
+                    Employee employeeFromCsv = new NetworkAdmin(id, employee[1], employee[2], (Manager) manager1);
                     employees.add(employeeFromCsv);
-                }if(employee[3].equals("Tester")){
-                    Employee manager1 =  readManager(filePath, manager);
-                    Employee employeeFromCsv = new Tester(id, employee[1], employee[2], (Manager)manager1);
+                }
+                if (employee[3].equals("Tester")) {
+                    Employee manager1 = readManager(filePath, manager);
+                    Employee employeeFromCsv = new Tester(id, employee[1], employee[2], (Manager) manager1);
                     employees.add(employeeFromCsv);
-                }if(employee[3].equals("WebDesigner")){
-                    Employee manager1 =  readManager(filePath, manager);
-                    Employee employeeFromCsv = new WebDesigner(id, employee[1], employee[2], (Manager)manager1);
-                    employees.add(employeeFromCsv);}
+                }
+                if (employee[3].equals("WebDesigner")) {
+                    Employee manager1 = readManager(filePath, manager);
+                    Employee employeeFromCsv = new WebDesigner(id, employee[1], employee[2], (Manager) manager1);
+                    employees.add(employeeFromCsv);
+                }
             }
 
             return employees;
@@ -185,14 +194,13 @@ public class CSVUtils {
     }
 
 
-
-
     public static void writeLines(String csvFile, List<Employee> employees) {
         FileWriter fileWriter;
         boolean appendDataAtTheEnd = true;
         try {
             String actiune = "Add employees in CSV file";
-
+            AuditService auditService = new AuditService();
+            auditService.addToAudit(actiune);
             fileWriter = new FileWriter(csvFile, appendDataAtTheEnd);
 
             for (Employee employee : employees) {
@@ -211,7 +219,7 @@ public class CSVUtils {
                 if (employee instanceof Tester) {
                     Tester tester = (Tester) employee;
                     employeeAsString = Arrays.asList(tester.getId().toString(), tester.getFirstName(),
-                            tester.getLastName(), tester.getJobName(),tester.getManager().getId().toString()); // -1 pentru ca nu are MANAGER
+                            tester.getLastName(), tester.getJobName(), tester.getManager().getId().toString()); // -1 pentru ca nu are MANAGER
                 }
                 if (employee instanceof WebDesigner) {
                     WebDesigner webDesigner = (WebDesigner) employee;
@@ -243,5 +251,78 @@ public class CSVUtils {
         }
 
     }
+
+    //metode pt companie
+    public static void writeCompanies(String csvFile, List<CompanyLocation> companyLocations) {
+        FileWriter fileW;
+        boolean appendDataAtTheEnd = true;
+        try {
+            String actiune = "Add_Company_Locations_In_CSV_File";
+            AuditService auditService = new AuditService();
+            auditService.addToAudit(actiune);
+            fileW = new FileWriter(csvFile, appendDataAtTheEnd);
+
+            for (CompanyLocation companyLocation : companyLocations) {
+                List<String> companyAsString = null;
+
+                companyAsString = Arrays.asList(companyLocation.getIdCompany().toString(), companyLocation.getCompanyName(), companyLocation.getCompanyAddress());
+                removeLineFromFile(companyLocation.getIdCompany().toString(), new File(csvFile));
+                CSVUtils.writeLine(fileW, companyAsString);
+            }
+
+            fileW.flush();
+            fileW.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static List<CompanyLocation> readCompanyLocationsFromCsv(String filePath) {
+        String actiune = "Get_Locations_From_CSV_File";
+        AuditService auditService = new AuditService();
+        auditService.addToAudit(actiune);
+        List<CompanyLocation> companies = new ArrayList<>();
+        BufferedReader br = null;
+        String line = "";
+
+        try {
+            br = new BufferedReader(new FileReader(filePath));
+            while ((line = br.readLine()) != null) {
+
+                String[] locations1 = line.split(String.valueOf(COMMA_SEPARATOR));
+                String[] locations = new String[locations1.length];
+
+//                elimin "" din string-ul de cuvinte
+                for (int i = 0; i < locations1.length; i++) {
+                    locations[i] = locations1[i].replace("\"", "");
+                }
+
+                Integer id = Integer.parseInt(locations[0]);
+
+                CompanyLocation compFromCSV = new CompanyLocation(id, locations[1], locations[2]);
+                companies.add(compFromCSV);
+
+            }
+
+            return companies;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+
+}
+
 
 }

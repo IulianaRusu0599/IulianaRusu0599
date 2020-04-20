@@ -63,9 +63,37 @@ public final class MainService {
 
     }
 
+    public void removeEmployeeFromCSV(String idToRemove)
+    {
+        employeeService.removeFromCSV(idToRemove);
+    }
+
+    public List<CompanyLocation> addCompanyLocations(List<CompanyLocation> companyLocations) {
+        for (CompanyLocation comp : companyLocations) {
+            companyService.addToCsv(comp);
+        }
+        return companyLocations;
+    }
+
+    public void printAllCompanyLocations() {
+        List<CompanyLocation> companies = companyService.readAll();
+        System.out.println("Afisare locatii companie: ");
+
+        for(CompanyLocation companyLocation: companies)
+        {
+            System.out.println(companyLocation.toString());
+        }
+    }
+
+
+    public void removeCompanyFromCSV(String idToRemove)
+    {
+        companyService.removeFromCSV(idToRemove);
+    }
 
 
 
+    //salary
     public List<Salary> addSalaries(List<Salary> salaries) {
         for (Salary salary : salaries) {
                 salaryService.add(salary);

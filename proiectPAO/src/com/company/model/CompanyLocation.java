@@ -43,6 +43,7 @@ public class CompanyLocation implements Entity{
         return "Company{" +
                 "idCompany=" + idCompany +
                 ", companyName='" + companyName + '\'' +
+                ", companyAddress='"+companyAddress +'\'' +
                 '}';
     }
 

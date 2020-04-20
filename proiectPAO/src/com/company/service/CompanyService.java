@@ -1,8 +1,11 @@
 package com.company.service;
 
 import com.company.model.CompanyLocation;
+import com.company.utils.CSVUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CompanyService {
@@ -25,12 +28,22 @@ public class CompanyService {
     }
 
 
-//
-//    public void addToCsv(Company c) {
-//
-//        CSVUtils.writeLines(filePath, Arrays.asList(c));
-//    }
 
+    public void addToCsv(CompanyLocation c) {
+
+        CSVUtils.writeCompanies(filePath, Arrays.asList(c));
+    }
+
+    public List<CompanyLocation> readAll() {
+
+        return CSVUtils.readCompanyLocationsFromCsv(filePath);
+
+    }
+
+    public void removeFromCSV(String idToRemove)
+    {
+        CSVUtils.removeLineFromFile(idToRemove, new File(filePath));
+    }
 
     public CompanyLocation get(Integer id) {
         for (CompanyLocation c : companies) {

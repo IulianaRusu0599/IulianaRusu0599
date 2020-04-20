@@ -6,10 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import com.company.utils.CSVUtils;
 
 public class AuditService {
     private List<String> audit;

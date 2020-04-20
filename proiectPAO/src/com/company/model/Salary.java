@@ -5,7 +5,7 @@ public class Salary implements Entity{
     private Integer idEmployee;
     private Double salary;
 
-    public Salary(Integer idSalary, Integer idEmployee, Double salary, Boolean status)
+    public Salary(Integer idSalary, Integer idEmployee, Double salary)
     {
         this.idSalary = idSalary;
         this.idEmployee =idEmployee;

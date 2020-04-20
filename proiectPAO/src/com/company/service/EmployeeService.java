@@ -1,5 +1,6 @@
 package com.company.service;
 
+import java.io.File;
 import java.util.*;
 
 import com.company.model.Employee;
@@ -88,4 +89,11 @@ public class EmployeeService {
         return CSVUtils.readEmployeesFromCsv(filePath);
 
     }
+
+
+    public void removeFromCSV(String idToRemove)
+    {
+        CSVUtils.removeLineFromFile(idToRemove, new File(filePath));
+    }
+
 }
