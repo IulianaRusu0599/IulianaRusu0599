@@ -1,19 +1,27 @@
 package com.company.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import com.company.model.Employee;
 import com.company.model.Salary;
+import com.company.utils.CSVUtils;
 
 public class EmployeeService {
 
+    private static EmployeeService INSTANCE;
     private List<Employee> employees;
+
+    final static String filePath = System.getProperty("user.dir") + "/data/employees.csv";
 
     public EmployeeService() {
         employees = new ArrayList<>();
+    }
+
+    public static EmployeeService getInstance() {
+
+        if(INSTANCE == null)
+            INSTANCE = new EmployeeService();
+        return INSTANCE;
     }
 
     public void add(Employee e) {
@@ -45,15 +53,14 @@ public class EmployeeService {
 
 
     public List<Employee> getAllNames(Boolean ordered) {
-        // copie
-        ArrayList<Employee> employeesCopy = new ArrayList<>(this.employees);
+
+        ArrayList<Employee> employeesCopy = new ArrayList<>(CSVUtils.readEmployeesFromCsv(filePath));
 
         if (ordered) {
             Collections.sort(employeesCopy, new Comparator<Employee>() {
                 @Override
                 public int compare(Employee o1, Employee o2) {
                     int i = o1.getLastName().compareTo(o2.getLastName());
-                    // daca lastName e la fel
                     if (i == 0) {
                         int i1 = o1.getFirstName().compareTo(o2.getFirstName());
                         return i1;
@@ -67,5 +74,18 @@ public class EmployeeService {
         }
 
         return employeesCopy;
+    }
+
+
+
+    public void addToCsv(Employee e) {
+
+        CSVUtils.writeLines(filePath, Arrays.asList(e));
+    }
+
+    public List<Employee> readAll() {
+
+        return CSVUtils.readEmployeesFromCsv(filePath);
+
     }
 }

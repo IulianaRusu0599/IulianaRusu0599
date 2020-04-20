@@ -4,14 +4,12 @@ public class Salary implements Entity{
     private Integer idSalary;
     private Integer idEmployee;
     private Double salary;
-    private Boolean status; // activ sau nu, un employee isi poate schimba functia in ierarhia organizatiei
 
     public Salary(Integer idSalary, Integer idEmployee, Double salary, Boolean status)
     {
         this.idSalary = idSalary;
         this.idEmployee =idEmployee;
         this.salary = salary;
-        this.status =status;
     }
 
     public Integer getIdSalary() {
@@ -38,9 +36,6 @@ public class Salary implements Entity{
         this.salary = salary;
     }
 
-    public Boolean getStatus() {
-        return status;
-    }
 
     @Override
     public String toString() {
@@ -48,12 +43,12 @@ public class Salary implements Entity{
                 "idSalary = " + idSalary +
                 ", idEmployee = " + idEmployee +
                 ", salary = " + salary +
-                ", status = " + status +
                 "}" +"\n" ;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
 
+    @Override
+    public void printObjectContent() {
+
+    }
 }

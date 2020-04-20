@@ -11,11 +11,21 @@ import java.util.List;
 
 
 public class SalaryService {
-
+    private static SalaryService INSTANCE;
     private List<Salary> salaryList;
+
+//    final static String Path = System.getProperty("user.dir") + "/data/salaries.csv";
 
     public SalaryService() {
         salaryList = new ArrayList<>();
+    }
+
+    public static SalaryService getInstance() {
+
+            if(INSTANCE == null)
+                INSTANCE = new SalaryService();
+            return INSTANCE;
+
     }
 
     public void add(Salary s) {
@@ -51,10 +61,11 @@ public class SalaryService {
                 @Override
                 public int compare(Salary s1, Salary s2) {
                     int i = s1.getSalary().compareTo(s2.getSalary());
+
                     return i;
                 }
             });
-
+            Collections.reverse(salariesCopy);
             return salariesCopy;
         }
 

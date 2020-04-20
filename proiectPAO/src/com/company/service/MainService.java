@@ -1,27 +1,36 @@
 package com.company.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.company.model.Employee;
 import com.company.model.Salary;
-import com.company.model.Company;
+import com.company.model.CompanyLocation;
 
 // expune functii pentru Main
-public class MainService {
+// clasa singleton
+public final class MainService {
+    private static MainService INSTANCE;
 
     private EmployeeService employeeService;
-    // salary service
     private SalaryService salaryService;
-
-    public MainService() {
-        employeeService = new EmployeeService();
-        salaryService = new SalaryService();
+    private CompanyService companyService;
+    private AuditService auditService;
+    private MainService() {
+        employeeService = EmployeeService.getInstance();
+        salaryService = SalaryService.getInstance();
+        companyService = CompanyService.getInstance();
+        auditService = AuditService.getInstance();
+    }
+    public static MainService getInstance()
+    {
+        if(INSTANCE == null)
+            INSTANCE = new MainService();
+        return INSTANCE;
     }
 
     public List<Employee> addEmployees(List<Employee> employees) {
         for (Employee e : employees) {
-            employeeService.add(e);
+            employeeService.addToCsv(e);
         }
         return employees;
     }
@@ -33,52 +42,57 @@ public class MainService {
     }
 
 
+    public void printAllEmployees() {
+        List<Employee> employees = employeeService.readAll();
+        System.out.println("Afisare employees: ");
+        System.out.println(employees.size());
+        for(Employee employee: employees)
+        {
+            System.out.println(employee.toString());
+        }
+    }
+
 
     // print ordered by last name
-    public void printAllEmployeesOrdByName(Boolean ordered) {
+    public void printEmployeesOrdered(Boolean ordered) {
         List<Employee> employees = employeeService.getAllNames(ordered);
+        System.out.println("Afisare angajati in ordine alfabetica: ");
         for (Employee e : employees) {
             System.out.println(e.toString());
         }
 
     }
-    public void printEmployees(List<Employee> employeesList)
-    {
-        for(Employee emp: employeesList)
-            System.out.println(emp.toString());
-    }
 
 
-    //pun in list doar salariile actuale ale angajatilor
+
+
     public List<Salary> addSalaries(List<Salary> salaries) {
         for (Salary salary : salaries) {
                 salaryService.add(salary);
         }
         return salaries;
     }
-    public void printSalary(List<Salary> salaryList)
-    {
-        for(Salary s: salaryList)
-            System.out.println(s.toString());
-    }
+
     public void printAllSalary(Boolean ordered) {
         List<Salary> salaries = salaryService.getAllSalary(ordered);
 
         for (Salary salary : salaries) {
-            if(salary.getStatus()==true)
                 System.out.println(salary.toString());
         }
 
+
     }
 
-    public void printListMap(List<Map<String, Double>> listEmplSalary)
-    {
-        for(Map<String, Double> map : listEmplSalary) {
-            System.out.println(map.keySet()+ "are salariul de" + map.values());
-        }
-    }
+//    public void printListMap(List<Map<String, Double>> listEmplSalary)
+//    {
+//        for(Map<String, Double> map : listEmplSalary) {
+//            System.out.println(map.keySet()+ "are salariul de" + map.values());
+//        }
+//    }
 
-    public void printCompany(Company company) {
+    public void printCompany(CompanyLocation company) {
         System.out.println(company.toString());
     }
+
+
 }
