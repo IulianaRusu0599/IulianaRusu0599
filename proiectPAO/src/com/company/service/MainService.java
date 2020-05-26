@@ -92,11 +92,15 @@ public final class MainService {
     }
 
 
+    public void printCompany(CompanyLocation company) {
+        System.out.println(company.toString());
+    }
+
 
     //salary
     public List<Salary> addSalaries(List<Salary> salaries) {
         for (Salary salary : salaries) {
-                salaryService.add(salary);
+            salaryService.addToCsv(salary);
         }
         return salaries;
     }
@@ -111,16 +115,11 @@ public final class MainService {
 
     }
 
-//    public void printListMap(List<Map<String, Double>> listEmplSalary)
-//    {
-//        for(Map<String, Double> map : listEmplSalary) {
-//            System.out.println(map.keySet()+ "are salariul de" + map.values());
-//        }
-//    }
-
-    public void printCompany(CompanyLocation company) {
-        System.out.println(company.toString());
+    public void removeSalaryFromCSV(String idToRemove)
+    {
+        salaryService.removeFromCSV(idToRemove);
     }
+
 
 
 }

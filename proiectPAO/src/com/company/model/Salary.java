@@ -5,15 +5,19 @@ public class Salary implements Entity{
     private Integer idEmployee;
     private Double salary;
 
-    public Salary(Integer idSalary, Integer idEmployee, Double salary)
+    public Salary( Integer idEmployee, Integer idSalary, Double salary)
     {
         this.idSalary = idSalary;
         this.idEmployee =idEmployee;
         this.salary = salary;
     }
 
+    public Salary() {
+
+    }
+
     public Integer getIdSalary() {
-        return idSalary;
+         return idSalary;
     }
 
     public void setIdSalary(Integer idSalary) {

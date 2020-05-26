@@ -2,12 +2,10 @@ package com.company.model;
 
 public class Developer extends Employee {
 
-    private Manager manager;
     private Salary salary;
 
     public Developer(Integer id, String firstName, String lastName, Manager manager) {
         super(id, firstName, lastName, manager);
-        this.manager = manager;
     }
 
 
@@ -16,6 +14,7 @@ public class Developer extends Employee {
         return salary;
     }
 
+    @Override
     public void setSalary(Salary salary) {
         this.salary = salary;
     }
@@ -26,26 +25,11 @@ public class Developer extends Employee {
         return "Developer";
     }
 
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-
-
-
     @Override
     public String toString() {
-        return "{id = " + getId() + " firstName = " + getFirstName() +
-                " lastName = " + getLastName() + " role = Developer" + " manager = " + getManager() + "}\n";
-
-
-//        return "Developer {" +
-//                "id = " + this.getId() + "; " +
-//                "manager=" + manager +
-//                '}';
+        return super.toString() + " Developer{" +
+                "salary=" + salary +
+                '}';
     }
 
     @Override

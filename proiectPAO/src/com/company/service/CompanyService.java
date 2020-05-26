@@ -1,6 +1,8 @@
 package com.company.service;
 
 import com.company.model.CompanyLocation;
+import com.company.model.Salary;
+import com.company.repository.CompanyLocationsRepository;
 import com.company.utils.CSVUtils;
 
 import java.io.File;
@@ -57,4 +59,22 @@ public class CompanyService {
     {
         System.out.println(company.toString());
     }
+
+
+
+
+    //database
+    private static final CompanyLocationsRepository COMPANY_LOCATIONS_REPOSITORY = CompanyLocationsRepository.getInstance();
+
+    public void addLocation(Integer id, Integer idEmp, Integer idComp, String adresa){
+        COMPANY_LOCATIONS_REPOSITORY.saveLocation(id, idEmp, idComp, adresa);
+    }
+
+
+    public List<CompanyLocation> selectAllCompanyLocations() {
+        return CompanyLocationsRepository.findAll();
+    }
+
+
+
 }

@@ -21,7 +21,10 @@ public class Main {
         CompanyLocation c3 = new CompanyLocation(829,"MyCompany", "Strada Stirbei Voda");
         CompanyLocation c4 = new CompanyLocation(132,"MyCompany", "Strada Nucsoara");
 
-
+        Salary s0 = new Salary(14,0, (double) 2500);
+        Salary s1 = new Salary(23,1, (double) 1200);
+        Salary s2 = new Salary(19,2, (double) 2000);
+        Salary s3 = new Salary(34,3, (double) 1500);
         //apelez metoda statica din MainService
         MainService ms = MainService.getInstance();
 
@@ -58,8 +61,13 @@ public class Main {
                     ms.removeCompanyFromCSV(idComp);
                     break;
                 case "addSal":
+                    System.out.println("Add Salary");
+                    ms.addSalaries(Arrays.asList(s0,s1,s2,s3));
                     break;
                 case "removeSal":
+                    System.out.println("IdEmployeeOfSalaryToRemove:");
+                    String idEmplSalary = in.next();
+                    ms.removeSalaryFromCSV(idEmplSalary);
                     break;
 
                 default:

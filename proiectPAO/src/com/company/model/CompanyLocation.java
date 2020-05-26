@@ -7,8 +7,29 @@ public class CompanyLocation implements Entity{
     private Integer idCompany;
     private String companyName;
     private String companyAddress;
+    private  Integer idEmployee;
 
+    public CompanyLocation() {
 
+    }
+
+    public Integer getIdEmployee() {
+        return idEmployee;
+    }
+
+    public void setIdEmployee(Integer idEmployee) {
+        this.idEmployee = idEmployee;
+    }
+
+    // pt db
+    public CompanyLocation(Integer idCompany, String companyName, String companyAddress, Integer idEmployee) {
+        this.idCompany = idCompany;
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.idEmployee = idEmployee;
+    }
+
+    // pt csv
     public CompanyLocation(Integer idCompany, String companyName, String companyAddress) {
         this.idCompany = idCompany;
         this.companyName = companyName;
@@ -38,12 +59,14 @@ public class CompanyLocation implements Entity{
     public void setCompanyAddress(String companyAddress) {
         this.companyAddress = companyAddress;
     }
+
     @Override
     public String toString() {
-        return "Company{" +
+        return "CompanyLocation{" +
                 "idCompany=" + idCompany +
                 ", companyName='" + companyName + '\'' +
-                ", companyAddress='"+companyAddress +'\'' +
+                ", companyAddress='" + companyAddress + '\'' +
+                ", idEmployee=" + idEmployee +
                 '}';
     }
 

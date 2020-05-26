@@ -4,7 +4,6 @@ public abstract class Employee implements Entity {
     private Integer id;
     private String firstName;
     private String lastName;
-//    private Integer idCompany;
     private Manager manager;
 
     public Employee(Integer id, String firstName, String lastName, Manager manager) {
@@ -15,6 +14,8 @@ public abstract class Employee implements Entity {
     }
 
     public abstract String getJobName();
+
+    public abstract void setSalary(Salary salary);
 
     public Integer getId() {
         return id;
@@ -40,13 +41,15 @@ public abstract class Employee implements Entity {
         this.lastName = lastName;
     }
 //
-//    public Integer getIdCompany() {
-//        return idCompany;
-//    }
-//
-//    public void setIdCompany(Integer idCompany) {
-//        this.idCompany = idCompany;
-//    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
 
     @Override
     public String toString() {
@@ -54,9 +57,7 @@ public abstract class Employee implements Entity {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-//                ", idCompany=" + idCompany +
                 ", manager=" + manager +
                 '}';
     }
-
 }

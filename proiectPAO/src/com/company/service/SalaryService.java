@@ -2,19 +2,18 @@ package com.company.service;
 
 import com.company.model.Salary;
 import com.company.model.Employee;
+import com.company.repository.SalaryRepository;
+import com.company.utils.CSVUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
+import java.io.File;
+import java.util.*;
 
 
 public class SalaryService {
     private static SalaryService INSTANCE;
     private List<Salary> salaryList;
 
-//    final static String Path = System.getProperty("user.dir") + "/data/salaries.csv";
+    final static String filePath = System.getProperty("user.dir") + "/data/salaries.csv";
 
     public SalaryService() {
         salaryList = new ArrayList<>();
@@ -22,9 +21,9 @@ public class SalaryService {
 
     public static SalaryService getInstance() {
 
-            if(INSTANCE == null)
-                INSTANCE = new SalaryService();
-            return INSTANCE;
+        if (INSTANCE == null)
+            INSTANCE = new SalaryService();
+        return INSTANCE;
 
     }
 
@@ -70,6 +69,44 @@ public class SalaryService {
         }
 
         return salariesCopy;
+    }
+
+
+    public void addToCsv(Salary s) {
+
+        CSVUtils.writeSalaries(filePath, Arrays.asList(s));
+    }
+
+
+    public void removeFromCSV(String idToRemove) {
+        CSVUtils.removeLineFromFile(idToRemove, new File(filePath));
+    }
+
+
+    //metode pt database
+
+    private final SalaryRepository salaryRepository = SalaryRepository.getInstance();
+
+    public Salary findSalary(Integer idEmployee) {
+        return salaryRepository.findSalary(idEmployee);
+    }
+
+    public Salary saveSalary(Integer idSalary, Integer idEmployee, Double salary) {
+        Salary s = new Salary();
+        s.setIdSalary(idSalary);
+        s.setIdEmployee(idEmployee);
+        s.setSalary(salary);
+
+        return salaryRepository.saveSalary(s);
+    }
+
+
+    public boolean deleteSalary(Integer idEmployee) {
+        return salaryRepository.deleteSalary(idEmployee);
+    }
+
+    public List<Salary> selectAllSalaries() {
+        return salaryRepository.findAll();
     }
 
 }

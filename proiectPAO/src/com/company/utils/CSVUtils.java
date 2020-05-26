@@ -14,7 +14,7 @@ public class CSVUtils {
     private static final String DOUBLE_QUOTE = "\"";
 
     public static void removeLineFromFile(String idToRemove, File f) {
-        String actiune = "Remove employees from CSV file";
+        String actiune = "Remove line from CSV file";
         AuditService auditService = new AuditService();
         auditService.addToAudit(actiune);
         try {
@@ -257,7 +257,7 @@ public class CSVUtils {
         FileWriter fileW;
         boolean appendDataAtTheEnd = true;
         try {
-            String actiune = "Add_Company_Locations_In_CSV_File";
+            String actiune = "Add_Company_Locations_to_CSV_File";
             AuditService auditService = new AuditService();
             auditService.addToAudit(actiune);
             fileW = new FileWriter(csvFile, appendDataAtTheEnd);
@@ -278,6 +278,7 @@ public class CSVUtils {
         }
 
     }
+
 
 
     public static List<CompanyLocation> readCompanyLocationsFromCsv(String filePath) {
@@ -324,5 +325,32 @@ public class CSVUtils {
 
 }
 
+
+
+    public static void writeSalaries(String csvFile, List<Salary> salaryList) {
+        FileWriter fileSW;
+        boolean appendDataAtTheEnd = true;
+        try {
+            String actiune = "Add_Salary_to_CSV_File";
+            AuditService auditService = new AuditService();
+            auditService.addToAudit(actiune);
+            fileSW = new FileWriter(csvFile, appendDataAtTheEnd);
+
+            for (Salary s : salaryList) {
+                List<String> salaryAsString = null;
+
+                salaryAsString = Arrays.asList( s.getIdEmployee().toString(),s.getIdSalary().toString(), s.getSalary().toString());
+                removeLineFromFile(s.getIdSalary().toString(), new File(csvFile));
+                CSVUtils.writeLine(fileSW, salaryAsString);
+            }
+
+            fileSW.flush();
+            fileSW.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
