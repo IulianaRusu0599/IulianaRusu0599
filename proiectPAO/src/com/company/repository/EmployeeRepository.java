@@ -29,7 +29,7 @@ public class EmployeeRepository {
         try (PreparedStatement st = DatabaseConnection.getInstance().getConnection()
                 .prepareStatement("SELECT * FROM employees WHERE id = ?")) {
             st.setInt(1, idEmployee);
-//            Employee e = null;
+            Employee e = null;
 
             try (ResultSet result = st.executeQuery()) {
                 if (!result.next()) {
@@ -39,27 +39,27 @@ public class EmployeeRepository {
 
                 System.out.println("Employee was found!" + result.getString("type"));
 
-//                switch(result.getString("type")){
-//                    case "Developer":
-//                        e = new Developer(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
-//                        break;
-//                    case "Manager":
-//                        e = new Manager(result.getInt("id"), result.getString("firstName"), result.getString("lastName"));
-//                        break;
-//                    case "DataBaseAdmin":
-//                        e = new DataBaseAdmin(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
-//                        break;
-//                    case "NetworkAdmin":
-//                        e = new NetworkAdmin(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
-//                        break;
-//                    case "Tester":
-//                        e = new Tester(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
-//                        break;
-//                    case "WebDesigner":
-//                        e = new WebDesigner(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
-//                        break;
-//                    default:
-//                }
+                switch(result.getString("type")){
+                    case "Developer":
+                        e = new Developer(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
+                        break;
+                    case "Manager":
+                        e = new Manager(result.getInt("id"), result.getString("firstName"), result.getString("lastName"));
+                        break;
+                    case "DataBaseAdmin":
+                        e = new DataBaseAdmin(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
+                        break;
+                    case "NetworkAdmin":
+                        e = new NetworkAdmin(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
+                        break;
+                    case "Tester":
+                        e = new Tester(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
+                        break;
+                    case "WebDesigner":
+                        e = new WebDesigner(result.getInt("id"), result.getString("firstName"), result.getString("lastName"), null);
+                        break;
+                    default:
+                }
                 System.out.println("idEmployee = " + result.getInt("id") + "; lastName = " + result.getString("lastName") + "; firstName = " + result.getString("firstName") + "; type = " + result.getString("type") + ";");
 //                return e;
             }
@@ -103,32 +103,29 @@ public class EmployeeRepository {
                         case "Developer":
                             Integer id;
                             e = new Developer(result.getInt("id"), result.getString("lastName"), result.getString("firstName"),null);
-
-
-
                             employees.add(e);
                             break;
                         case "Manager":
                             e = new Manager(result.getInt("id"), result.getString("lastName"), result.getString("firstName"));
                             employees.add(e);
                             break;
-//                        case "DataBaseAdmin":
-//                            e = new DataBaseAdmin(id, "firstName", "lastName", null);
-//                            employees.add(e);
-//                            break;
-//                        case "NetworkAdmin":
-//                            e = new NetworkAdmin(id, "firstName", "lastName", null);
-//                            employees.add(e);
-//                            break;
-//                        case "Tester":
-//                            e = new Tester(id, "firstName", "lastName", null);
-//                            employees.add(e);
-//                            break;
-//                        case "WebDesigner":
-//                            e = new WebDesigner(id, "firstName", "lastName", null);
-//                            employees.add(e);
-//                            break;
-//                        default:
+                        case "DataBaseAdmin":
+                            e = new DataBaseAdmin(result.getInt("id"), result.getString("lastName"), result.getString("firstName"),null);
+                            employees.add(e);
+                            break;
+                        case "NetworkAdmin":
+                            e = new NetworkAdmin(result.getInt("id"), result.getString("lastName"), result.getString("firstName"),null);
+                            employees.add(e);
+                            break;
+                        case "Tester":
+                            e = new Tester(result.getInt("id"), result.getString("lastName"), result.getString("firstName"),null);
+                            employees.add(e);
+                            break;
+                        case "WebDesigner":
+                            e = new WebDesigner(result.getInt("id"), result.getString("lastName"), result.getString("firstName"),null);
+                            employees.add(e);
+                            break;
+                        default:
                     }
                 }
             }

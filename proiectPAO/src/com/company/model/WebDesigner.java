@@ -24,7 +24,7 @@ public class WebDesigner extends Employee{
 
     @Override
     public String toString() {
-        return "WebDesigner{" +
+        return super.toString() +"--> WebDesigner <--{" +
                 "salary=" + salary +
                 '}';
     }

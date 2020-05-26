@@ -64,7 +64,6 @@ public class CompanyLocation implements Entity{
     public String toString() {
         return "CompanyLocation{" +
                 "idCompany=" + idCompany +
-                ", companyName='" + companyName + '\'' +
                 ", companyAddress='" + companyAddress + '\'' +
                 ", idEmployee=" + idEmployee +
                 '}';

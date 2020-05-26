@@ -14,8 +14,8 @@ public class Manager extends Employee {
 
     @Override
     public String toString() {
-        return "{id = " + this.getId() + " firstName = "
-                + this.getFirstName() + " lastName = " + this.getLastName() + " role = Manager}\n";
+        return super.toString() + "--> Manager <--{" +
+                "salary=" + salary +'}';
     }
 
     public Salary getSalary() {
@@ -25,6 +25,7 @@ public class Manager extends Employee {
     public void setSalary(Salary salary) {
         this.salary = salary;
     }
+
 
     @Override
     public void printObjectContent() {

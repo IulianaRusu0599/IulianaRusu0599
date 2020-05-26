@@ -7,6 +7,7 @@ import com.company.model.Salary;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,27 @@ public class CompanyLocationsRepository {
     }
 
 
+    public  void findCompanyLocation(Integer idComp ) {
+        CompanyLocation companyLocation = new CompanyLocation();
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT * FROM companyLocations WHERE idComp = ?")) {
+            statement.setInt(1, idComp);
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (!result.next()) {
+                    System.out.println("Something went wrong when trying to find company location: Location was not found!");
+                }
+
+                System.out.println("Location was found!");
+                companyLocation.setIdEmployee(result.getInt("idEmp"));
+                companyLocation.setIdCompany(result.getInt("idComp"));
+                companyLocation.setCompanyAddress(result.getString("adresa"));
+                System.out.println("idComp = " + result.getInt("idComp") +"; "+ "idEmp = " + result.getInt("idEmp")  +"; "+  "adress = " + result.getString("adresa") +"; ");
+            }
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to find location: " + e.getMessage());
+        }
+
+    }
     public static List<CompanyLocation> findAll() {
 
         List<CompanyLocation> locations = new ArrayList<>();
@@ -35,7 +57,7 @@ public class CompanyLocationsRepository {
 
                 while (result.next()) {
                     CompanyLocation companyLocation = new CompanyLocation();
-//                    companyLocation.setIdCompany(result.getInt("id"));
+                    companyLocation.setIdCompany(result.getInt("id"));
                     companyLocation.setIdEmployee(result.getInt("idEmp"));
                     companyLocation.setIdCompany(result.getInt("idComp"));
                     companyLocation.setCompanyAddress(result.getString("adresa"));
@@ -43,7 +65,7 @@ public class CompanyLocationsRepository {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println("Something went wrong when trying to location: " + e.getMessage());
         }
         return locations;
 
@@ -63,11 +85,30 @@ public class CompanyLocationsRepository {
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A new employee was inserted successfully!");
+                System.out.println("A new company location was inserted successfully!");
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to insert a new employee: " + e.getMessage());
+            System.out.println("Something went wrong when trying to insert a new company location: " + e.getMessage());
 
         }
+    }
+
+
+    public boolean deleteCompanyLocation(Integer idEmp) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement("DELETE FROM companyLocations WHERE idEmp=?")) {
+            statement.setString(1, String.valueOf(idEmp));
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Location was deleted successfully!");
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to delete location: " + e.getMessage());
+            return false;
+        }
+
+        System.out.println("Something went wrong when trying to delete location: company location was not found!");
+        return false;
     }
 }

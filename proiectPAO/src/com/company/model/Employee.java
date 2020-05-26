@@ -56,8 +56,8 @@ public abstract class Employee implements Entity {
         return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", manager=" + manager +
-                '}';
+                ", lastName='" + lastName + '}' ;
     }
+
+
 }

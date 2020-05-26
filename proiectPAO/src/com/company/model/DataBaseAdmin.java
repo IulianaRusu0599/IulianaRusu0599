@@ -7,6 +7,7 @@ public class DataBaseAdmin extends Employee{
         super(id, firstName, lastName, manager);
     }
 
+
     @Override
     public String getJobName() {
         return "DataBaseAdmin";
@@ -24,7 +25,7 @@ public class DataBaseAdmin extends Employee{
 
     @Override
     public String toString() {
-        return "DataBaseAdmin{" +
+        return super.toString() +"--> DataBaseAdmin <--{" +
                 "salary=" + salary +
                 '}';
     }

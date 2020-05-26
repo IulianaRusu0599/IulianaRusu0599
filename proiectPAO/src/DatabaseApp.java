@@ -20,7 +20,7 @@ public class DatabaseApp {
         SalaryService salaryService = SalaryService.getInstance();
 
         while (isOpen) {
-            System.out.println("Alege una din optiunile: " + options);
+            System.out.println("Alege una dintre optiunile: " + options);
 
             Scanner in = new Scanner(System.in);
             String s = in.nextLine();
@@ -28,7 +28,7 @@ public class DatabaseApp {
             switch (s) {
                 case "S":
                     System.out.println("salary");
-                    String opt = "c = citire; f = cautare; s = scriere; del = stergere;";
+                    String opt = "c = citire(afisare); f = cautare; s = scriere(adaugare); del = stergere;";
                     System.out.println("Alege instructiunile:" + opt);
                     String input = in.nextLine();
                     switch (input) {
@@ -94,21 +94,17 @@ public class DatabaseApp {
                             System.out.println("stergere employee");
                             System.out.println("Introduceti idEmployee de sters: ");
                             String id = in.nextLine();
-                            //best --> cand sterg employee sterg si salary
+                            // cand sterg employee sterg si salary
                             employeeService.deleteEmployee(Integer.parseInt(id));
                             break;
                         default:
                     }
                     break;
                 case "C":
+                    String opt2 = "c = citire; s = scriere; f = select; del = stergere;";
+                    System.out.println("Alege instructiunile:" + opt2);
                     String inp1 = in.nextLine();
                     switch (inp1) {
-                        case "s":
-                            String read = in.nextLine();
-                            String[] str = read.split(",");
-                            companyService.addLocation(Integer.parseInt(str[0]), Integer.parseInt(str[1]),
-                                    Integer.parseInt(str[2]), str[3]);
-                            break;
                         case "c":
                             System.out.println("citire companyLocations");
                             List<CompanyLocation> locations = companyService.selectAllCompanyLocations();
@@ -116,7 +112,25 @@ public class DatabaseApp {
                                 System.out.println(location);
                             }
                             break;
-
+                        case "s":
+                            System.out.println("Introduceti id, idEmp, idComp, adress");
+                            String read = in.nextLine();
+                            String[] str = read.split(",");
+                            companyService.addLocation(Integer.parseInt(str[0]), Integer.parseInt(str[1]),
+                                    Integer.parseInt(str[2]), str[3]);
+                            break;
+                        case "f":
+                            System.out.println("select companyLocation");
+                            System.out.println("Introduceti idCompanyLocation: ");
+                            String r = in.nextLine();
+                            companyService.findCompanyLocation(Integer.parseInt(r));
+                            break;
+                        case "del":
+                            System.out.println("stergere location");
+                            System.out.println("Introduceti idEmployee de sters: ");
+                            String idEmp = in.nextLine();
+                            companyService.deleteCompanyLocation(Integer.parseInt(idEmp));
+                            break;
                         default:
                     }
                     break;

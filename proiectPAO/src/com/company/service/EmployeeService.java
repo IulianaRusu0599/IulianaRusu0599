@@ -99,11 +99,10 @@ public class EmployeeService {
     private final static EmployeeRepository EMPLOYEE_REPOSITORY = EmployeeRepository.getInstance();
 
     private final static SalaryService SALARY_SERVICE = SalaryService.getInstance();
+    private final static CompanyService companyService = CompanyService.getInstance();
 
     public List<Employee> selectAllEmployees() {
         List<Employee> all = EMPLOYEE_REPOSITORY.findAll();
-
-        // trebuie query la baza de date sa pun salariul
 
         for (Employee e: all) {
             Integer id = e.getId();

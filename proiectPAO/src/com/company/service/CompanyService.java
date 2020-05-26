@@ -1,7 +1,6 @@
 package com.company.service;
 
 import com.company.model.CompanyLocation;
-import com.company.model.Salary;
 import com.company.repository.CompanyLocationsRepository;
 import com.company.utils.CSVUtils;
 
@@ -23,12 +22,11 @@ public class CompanyService {
 
     public static CompanyService getInstance() {
 
-        if(INSTANCE == null)
+        if (INSTANCE == null)
             INSTANCE = new CompanyService();
         return INSTANCE;
 
     }
-
 
 
     public void addToCsv(CompanyLocation c) {
@@ -42,8 +40,7 @@ public class CompanyService {
 
     }
 
-    public void removeFromCSV(String idToRemove)
-    {
+    public void removeFromCSV(String idToRemove) {
         CSVUtils.removeLineFromFile(idToRemove, new File(filePath));
     }
 
@@ -55,26 +52,33 @@ public class CompanyService {
         }
         return null;
     }
-    public void printCompany(CompanyLocation company)
-    {
+
+    public void printCompany(CompanyLocation company) {
         System.out.println(company.toString());
     }
-
-
 
 
     //database
     private static final CompanyLocationsRepository COMPANY_LOCATIONS_REPOSITORY = CompanyLocationsRepository.getInstance();
 
-    public void addLocation(Integer id, Integer idEmp, Integer idComp, String adresa){
+    public void addLocation(Integer id, Integer idEmp, Integer idComp, String adresa) {
         COMPANY_LOCATIONS_REPOSITORY.saveLocation(id, idEmp, idComp, adresa);
+
     }
 
+    public CompanyLocation findCompanyLocation(Integer idComp) {
+        COMPANY_LOCATIONS_REPOSITORY.findCompanyLocation(idComp);
+        return null;
+    }
 
     public List<CompanyLocation> selectAllCompanyLocations() {
         return CompanyLocationsRepository.findAll();
     }
 
+
+    public boolean deleteCompanyLocation(Integer idEmp) {
+        return COMPANY_LOCATIONS_REPOSITORY.deleteCompanyLocation(idEmp);
+    }
 
 
 }

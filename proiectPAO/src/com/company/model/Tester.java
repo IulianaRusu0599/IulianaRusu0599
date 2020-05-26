@@ -22,7 +22,7 @@ public class Tester extends Employee{
 
     @Override
     public String toString() {
-        return "Tester{" +
+        return super.toString() + "--> Tester <--{" +
                 "salary=" + salary +
                 '}';
     }

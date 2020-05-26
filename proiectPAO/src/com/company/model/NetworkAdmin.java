@@ -24,7 +24,7 @@ public class NetworkAdmin extends Employee{
 
     @Override
     public String toString() {
-        return "NetworkAdmin{" +
+        return super.toString() +"--> NetworkAdmin <--{" +
                 "salary=" + salary +
                 '}';
     }
